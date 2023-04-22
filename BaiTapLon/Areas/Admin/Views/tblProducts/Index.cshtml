@@ -1,0 +1,70 @@
+﻿@model IEnumerable<BaiTapLon.Models.tblProduct>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Mã danh mục
+        </th>
+        <th>
+            Tên sản phẩm
+        </th>
+        <th>
+            Meta Title
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th>
+            Ảnh
+        </th>
+        <th>
+            Giá
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoryid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetaTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @{
+                    //Lấy đường dẫn file ảnh
+                    string imgPath = "~/wwwroot/images/" + item.ImagePath;
+                }
+                <img src="@Url.Content(imgPath)" width="200" class="img-thumbnail" />
+                <!--@Html.DisplayFor(modelItem => item.ImagePath)-->
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.Pid }) |
+                @Html.ActionLink("Xem", "Details", new { id = item.Pid }) |
+                @Html.ActionLink("Xoá", "Delete", new { id = item.Pid })
+            </td>
+        </tr>
+    }
+
+</table>

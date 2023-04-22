@@ -1,0 +1,80 @@
+﻿@model PagedList.IPagedList<BaiTapLon.Models.tblProduct>
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section heading{
+    <div id="heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-content">
+                        <h2>Sản phẩm của chúng tôi</h2>
+                        <span><a href="@Url.Action("Index","Home")">Trang chủ</a> / <a href="@Url.Action("Index","tblProducts")">Sản Phẩm</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div id="products-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="product-heading">
+                    <h2>Hungry ?</h2>
+                    <img src="~/Assets/client/images/under-heading.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="filters col-md-12 col-xs-12">
+                <ul id="filters" class="clearfix">
+                    <li><span class="filter" data-filter="all">@Html.ActionLink("Tất cả", "Index", "tblProducts")</span></li>
+                    @{Html.RenderAction("CategoryMenu", "tblProducts"); }
+                </ul>
+            </div>
+        </div>
+        <div class="row" id="Container">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 col-sm-6 mix portfolio-item Pizza">
+                    <div class="portfolio-wrapper">
+                        <div class="portfolio-thumb">
+                            <!--<img src="~/Assets/client/images/product1.jpg" alt="" />-->
+                            <!--Lấy đường dẫn ảnh-->
+                            @{
+                                string ImagePath = "~/wwwroot/images/" + item.ImagePath;
+                            }
+                            <img src="@Url.Content(ImagePath)" alt="" width="250" height="250" />
+
+
+                            <div class="hover">
+                                <div class="hover-iner">
+                                    @Html.ActionLink("Chi tiết", "Details", new { id = item.Pid })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="label-text">
+                            <h3><a href="#">@Html.DisplayFor(modelItem => item.ProdName)</a></h3>
+                            <span class="text-category">@Html.DisplayFor(modelItem => item.Price) VND</span>
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+
+        </div>
+        <br />
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

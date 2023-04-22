@@ -1,0 +1,9 @@
+﻿@model List<BaiTapLon.Models.tblCategory>
+@foreach (var item in Model)
+{
+    <li><span class="filter"><a href="/tblProducts/ProductByCat?cat=@item.Categoryid"> @item.CategoryName </a></span></li>
+}
+@{
+    ViewBag.Title = "CategoryMenu";
+    Layout = null;
+}
